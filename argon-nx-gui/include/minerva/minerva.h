@@ -37,7 +37,7 @@ typedef enum
 } minerva_freq_t;
 
 
-void (*minerva_cfg)(mtc_config_t *mtc_cfg, void *);
+extern void (*minerva_cfg)(mtc_config_t *mtc_cfg, void *);
 void minerva(mtc_config_t *mtc_cfg);
 void minerva_change_freq(mtc_config_t *mtc_cfg, minerva_freq_t freq);
 void minerva_periodic_training(lv_task_t * task);

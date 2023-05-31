@@ -96,8 +96,8 @@ void gfx_set_rect_land_pitch(u32 *fb, const u32 *buf, u32 pos_x, u32 pos_y, u32 
 void gfx_set_rect_land_block(const u32 *buf, u32 pos_x, u32 pos_y, u32 pos_x2, u32 pos_y2);
 
 // Global gfx console and context.
-gfx_ctxt_t g_gfx_ctxt;
-gfx_con_t g_gfx_con;
+extern gfx_ctxt_t g_gfx_ctxt;
+extern gfx_con_t g_gfx_con;
 
 #endif
 

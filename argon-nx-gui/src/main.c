@@ -41,6 +41,14 @@
 
 #include "minerva/minerva.h"
 
+void (*minerva_cfg)(mtc_config_t *mtc_cfg, void *);
+argon_ctxt_t* g_argon_ctxt;
+gfx_ctxt_t g_gfx_ctxt;
+gfx_con_t g_gfx_con;
+sdmmc_t g_sd_sdmmc;
+sdmmc_storage_t g_sd_storage;
+FATFS g_sd_fs;
+bool g_sd_mounted;
 
 extern void pivot_stack(u32 stack_top);
 

@@ -94,7 +94,7 @@ void gfx_render_bmp_argb(const u32 *buf, u32 size_x, u32 size_y, u32 pos_x, u32 
 void gfx_render_splash(u8 *bitmap);
 
 // Global gfx console and context.
-gfx_ctxt_t g_gfx_ctxt;
-gfx_con_t g_gfx_con;
+extern gfx_ctxt_t g_gfx_ctxt;
+extern gfx_con_t g_gfx_con;
 
 #endif

@@ -4,7 +4,7 @@
 #include "libs/lvgl/lvgl.h"
 #include "core/argon-ctxt.h"
 
-argon_ctxt_t* g_argon_ctxt;
+extern argon_ctxt_t* g_argon_ctxt;
 
 void ctrl_reboot_rcm(lv_obj_t *obj, lv_event_t event);
 void ctrl_reboot_ofw(lv_obj_t *obj, lv_event_t event);

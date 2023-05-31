@@ -25,8 +25,8 @@ SOURCES         := src \
 			src/utils
 
 INCLUDES        := include
-VPATH           = $(dir $(wildcard ./$(SOURCEDIR)/*/)) $(dir $(wildcard ./$(SOURCEDIR)/*/*/))
-VPATH 		+= $(dir $(wildcard ./$(SOURCEDIR)/*/*/*/)) $(dir $(wildcard ./$(SOURCEDIR)/*/*/*/*/))
+VPATH           = $(dir $(wildcard ./$(SOURCEDIR)/))  $(dir $(wildcard ./$(SOURCEDIR)/*/)) $(dir $(wildcard ./$(SOURCEDIR)/*/*/))
+VPATH 		   += $(dir $(wildcard ./$(SOURCEDIR)/*/*/*/)) $(dir $(wildcard ./$(SOURCEDIR)/*/*/*/*/))
 CFILES          := $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 SFILES          := $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 
@@ -78,6 +78,8 @@ $(BUILD)/$(TARGET)/%.o: %.c
 $(BUILD)/$(TARGET)/%.o: %.s
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OFILES_SRC): $(HFILES_BIN)
+$(OBJS): | $(BUILD)/$(TARGET)
+
+#$(OFILES_SRC): $(HFILES_BIN)
 
 print-%  : ; @echo $* = $($*)

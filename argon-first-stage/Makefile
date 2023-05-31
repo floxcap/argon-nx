@@ -22,8 +22,8 @@ SOURCES         := src \
 			src/utils
 
 INCLUDES        := include
-VPATH           = $(dir $(wildcard ./$(SOURCEDIR)/*/)) $(dir $(wildcard ./$(SOURCEDIR)/*/*/))
-VPATH 		+= $(dir $(wildcard ./$(SOURCEDIR)/*/*/*/)) $(dir $(wildcard ./$(SOURCEDIR)/*/*/*/*/))
+VPATH           = $(dir $(wildcard ./$(SOURCEDIR)/)) $(dir $(wildcard ./$(SOURCEDIR)/*/)) $(dir $(wildcard ./$(SOURCEDIR)/*/*/))
+VPATH 		   += $(dir $(wildcard ./$(SOURCEDIR)/*/*/*/)) $(dir $(wildcard ./$(SOURCEDIR)/*/*/*/*/))
 CFILES          := $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 SFILES          := $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 
@@ -41,6 +41,8 @@ ARCH := -march=armv4t -mtune=arm7tdmi -mthumb -mthumb-interwork
 CFLAGS = $(INCLUDE) $(ARCH) -O2 -nostdlib -ffunction-sections -fdata-sections -fomit-frame-pointer -fno-inline -std=gnu11 -Wall
 LDFLAGS = $(ARCH) -nostartfiles -lgcc -Wl,--nmagic,--gc-sections
 
+$(warning CFILES: $(CFILES))
+$(warning SFILES: $(SFILES))
 
 .PHONY: all clean
 
@@ -63,7 +65,7 @@ clean:
 $(MODULEDIRS):
 	$(MAKE) -C $@ $(MAKECMDGOALS)
 
-$(TARGET).bin: $(BUILD)/$(TARGET)/$(TARGET).elf $(MODULEDIRS)
+$(TARGET).bin: $(BUILD)/$(TARGET)/$(TARGET).elf | $(MODULEDIRS)
 	$(OBJCOPY) -S -O binary $< $(OUTPUT)/$@
 
 $(BUILD)/$(TARGET)/$(TARGET).elf: $(OBJS)
@@ -75,6 +77,11 @@ $(BUILD)/$(TARGET)/%.o: %.c
 $(BUILD)/$(TARGET)/%.o: %.s
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OFILES_SRC): $(HFILES_BIN)
+$(BUILD)/$(TARGET)/%.o: %.S
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS): | $(BUILD)/$(TARGET)
+
+#$(OFILES_SRC): $(HFILES_BIN)
 
 print-%  : ; @echo $* = $($*)
